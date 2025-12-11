@@ -23,6 +23,7 @@ if (!empty($userData)) {
         $userOwnsMovie = true;
     }
 }
+$alreadyReviewed = false;
 //checar se o filme tem imagem
 if ($movie->image == "") {
     $movie->image = "movie_cover.jpg";
@@ -52,27 +53,29 @@ if ($movie->image == "") {
         <div class="offset-md-1 col-md-10" id="reviews-container">
             <h3 id="reviews-title">Avaliações:</h3>
             <!-- Verifica se habilita a review para o usuario ou não -->
-            <div class="col-md-12" id="review-form-container">
-                <h4>Envie sua avaliação</h4>
-                <p class="page-description">Preencha o formulario com a nota e comentário sobre o filme</p>
-                <form action="<?= BASE_URL ?>process/review_process.php" id="review-form-id" method="post">
-                    <input type="hidden" name="type" value="create">
-                    <input type="hidden" name="movies_id" value="<?= $movie->id ?>">
-                    <div class="form-group">
-                        <label for="rating">Nota do filme:</label>
-                        <div class="star-rating">
-                            <?php for ($i = 10; $i > 0; $i--) {
-                                echo "<input type='radio'id='star$i' name='rating' value='$i'><label for='star$i'><i class='fa fa-star'></i></label>";
-                            } ?>
+            <?php if (!empty($userData) && !$userOwnsMovie && !$alreadyReviewed): ?>
+                <div class="col-md-12" id="review-form-container">
+                    <h4>Envie sua avaliação</h4>
+                    <p class="page-description">Preencha o formulario com a nota e comentário sobre o filme</p>
+                    <form action="<?= BASE_URL ?>process/review_process.php" id="review-form-id" method="post">
+                        <input type="hidden" name="type" value="create">
+                        <input type="hidden" name="movies_id" value="<?= $movie->id ?>">
+                        <div class="form-group">
+                            <label for="rating">Nota do filme:</label>
+                            <div class="star-rating">
+                                <?php for ($i = 10; $i > 0; $i--) {
+                                    echo "<input type='radio'id='star$i' name='rating' value='$i'><label for='star$i'><i class='fa fa-star'></i></label>";
+                                } ?>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group my-2">
-                        <label for="review">Seu Comentário:</label>
-                        <textarea name="review" id="review" rows="3" class="form-control" placeholder="Digite um comentario..."></textarea>
-                    </div>
-                    <input type="submit" class="btn btn-success px-4 my-4" value="Enviar Comentário">
-                </form>
-            </div>
+                        <div class="form-group my-2">
+                            <label for="review">Seu Comentário:</label>
+                            <textarea name="review" id="review" rows="3" class="form-control" placeholder="Digite um comentario..."></textarea>
+                        </div>
+                        <input type="submit" class="btn btn-success px-4 my-4" value="Enviar Comentário">
+                    </form>
+                </div>
+            <?php endif; ?>
             <!-- Comentário -->
             <div class="col-md-12 review">
                 <div class="row">

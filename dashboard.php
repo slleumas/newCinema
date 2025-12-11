@@ -36,7 +36,7 @@ $userMovie = $movieDao->getMoviesByUserId($userData->id);
                             <a href="<?= BASE_URL ?>movie.php?id=<?= $movie->id ?>" class="btn edit-btn btn-primary">
                                 <i class="far fa-edit"></i>
                             </a>
-                            <form action="<?= BASE_URL  ?>process/movie_process.php">
+                            <form action="<?= BASE_URL  ?>process/movie_process.php" method="post">
                                 <input type="hidden" name="type" value="delete">
                                 <input type="hidden" name="id" value="<?= $movie->id ?>">
                                 <button type="submit" class="btn delete-btn btn-danger">

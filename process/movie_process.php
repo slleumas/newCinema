@@ -69,6 +69,21 @@ if ($type == "create") {
     }
 
     $movieDao->create($movie);
+} elseif ($type == "delete") {
+    //recebe os dados do formulario
+
+    $id = filter_input(INPUT_POST, "id");
+    $movie = $movieDao->findById($id);
+    if ($movie) {
+        //verifica se o filme é do usuario
+        if ($movie->user_id === $userData->id) {
+
+            $movieDao->destroy($id);
+        } else {
+
+            $message->setMessage("Informações inválidas!", "error", "index.php");
+        }
+    }
 } else {
     $message->setMessage("Informações inválidas!", "error", "index.php");
 }
