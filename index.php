@@ -13,11 +13,6 @@ $novelMovies = $movieDao->getMoviesCategory("Romance");
 $tragedyMovies = $movieDao->getMoviesCategory("Drama");
 $fantasyMovies = $movieDao->getMoviesCategory("Fantasia / Ficção");
 
-
-$movieData = "";
-if (isset($movieData) || $movieData == "") {
-    $movieData = "movie_cover.jpg";
-}
 ?>
 <div id="main-container" class="container-fluid">
     <!-- TODOS OS FILMES -->

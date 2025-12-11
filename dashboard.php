@@ -30,7 +30,7 @@ $userMovie = $movieDao->getMoviesByUserId($userData->id);
                 <?php foreach ($userMovie as $movie): ?>
                     <tr>
                         <td scope="row"><?= $movie->id ?></td>
-                        <td><a href="#" class="table-movie-title"><?= $movie->title ?></a></td>
+                        <td><a href="<?= BASE_URL ?>movie.php?id=<?= $movie->id ?>" class="table-movie-title"><?= $movie->title ?></a></td>
                         <td><i class="fas fa-star"></i> 9</td>
                         <td class="actions-column">
                             <a href="<?= BASE_URL ?>movie.php?id=<?= $movie->id ?>" class="btn edit-btn btn-primary">

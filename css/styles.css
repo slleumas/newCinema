@@ -9,6 +9,11 @@
     width: 50px;
 }
 
+a {
+    text-decoration: none;
+}
+
+
 #InventCine-title {
     color: #fff;
     position: absolute;
@@ -207,13 +212,22 @@
     transition: .5s;
 }
 
-#profile-image-container div {
+
+
+#profile-image-container div,
+.profile-image-container {
     width: 150px;
     height: 150px;
     border: solid 1px #949494;
     border-radius: 100%;
     background-size: cover;
     background-position: center;
+}
+
+.profile-image-container {
+    width: 75px;
+    height: 75px;
+    border: #22bf19 solid 2px;
 }
 
 #profile-image-container div:hover {
@@ -264,10 +278,10 @@
     background-position: center;
 }
 
-.page-title {
+.page-title::after {
     content: "";
     width: 300px;
-    border-bottom: 2px solid #2e7d32;
+    border-bottom: 2px solid #7d2e2e;
     display: block;
     margin: 0 auto;
     padding-top: 7px;
@@ -275,6 +289,92 @@
 
 .page-descrition {
     margin-top: 10px;
+}
+
+/* Movie */
+.movie-container {
+    text-align: center;
+}
+
+.movie-details {
+    margin: 25px 0;
+}
+
+.pipe {
+    border: 1px solid #333;
+    margin: 0 10px;
+}
+
+#reviews_title {
+    margin-bottom: 25px;
+}
+
+#review-form-container {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
+#review-form-container textarea {
+    width: 50%;
+}
+
+#reviews-container {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 4px solid #2e7d32;
+}
+
+.review {
+    padding: 20px 0;
+    border-bottom: 1px solid #333;
+}
+
+.author-details-container {
+    padding-top: 20px;
+}
+
+.auth-name a {
+    color: #dfdfdf;
+    border-bottom: #22bf19 1px solid;
+    transition: .5s;
+}
+
+.auth-name a:hover {
+    color: #22bf19;
+}
+
+.coment-title {
+    color: #999;
+}
+
+/* Estrelas */
+.star-rating {
+    direction: rtl;
+    /* Faz efeito de hover funcionar da direita p/ esquerda */
+    display: inline-flex;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 18px;
+    color: #ccc;
+    cursor: pointer;
+    padding-left: 5px;
+    transition: color 0.2s;
+}
+
+.star-rating label:hover,
+.star-rating label:hover~label {
+    color: #ffcc00;
+}
+
+.star-rating input:checked~label {
+    color: #ffcc00;
 }
 
 /*Dashboard*/
