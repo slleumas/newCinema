@@ -59,7 +59,7 @@ if ($movie->image == "") {
                     <p class="page-description">Preencha o formulario com a nota e comentário sobre o filme</p>
                     <form action="<?= BASE_URL ?>process/review_process.php" id="review-form-id" method="post">
                         <input type="hidden" name="type" value="create">
-                        <input type="hidden" name="movies_id" value="<?= $movie->id ?>">
+                        <input type="hidden" name="movie_id" value="<?= $movie->id ?>">
                         <div class="form-group">
                             <label for="rating">Nota do filme:</label>
                             <div class="star-rating">
