@@ -262,6 +262,18 @@ a {
 
 }
 
+/*profile*/
+.profile-container {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-user {
+    border-left: 2px solid #7d2e2e;
+    padding-left: 15px;
+}
+
+
 /*new Movie*/
 
 .new-movie-container {

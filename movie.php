@@ -7,8 +7,8 @@ require_once BASE_PATH . 'dao/movieDAO.php';
 
 //Pegar o id do filme
 $id = filter_input(INPUT_GET, "id");
-$movie;
 $movieDao = new MovieDAO($conn, BASE_URL);
+$movie;
 if (empty($id)) {
     $message->setMessage("O filme desejado não foi encontrado", "error", "index.php");
 } else {
