@@ -33,7 +33,7 @@ $userMovie = $movieDao->getMoviesByUserId($userData->id);
                         <td><a href="<?= BASE_URL ?>movie.php?id=<?= $movie->id ?>" class="table-movie-title"><?= $movie->title ?></a></td>
                         <td><i class="fas fa-star"></i> 9</td>
                         <td class="actions-column">
-                            <a href="<?= BASE_URL ?>movie.php?id=<?= $movie->id ?>" class="btn edit-btn btn-primary">
+                            <a href="<?= BASE_URL ?>editmovie.php?id=<?= $movie->id ?>" class="btn edit-btn btn-primary">
                                 <i class="far fa-edit"></i>
                             </a>
                             <form action="<?= BASE_URL  ?>process/movie_process.php" method="post">

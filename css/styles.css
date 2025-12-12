@@ -273,8 +273,9 @@ a {
 }
 
 .movie-image-container {
-    height: 400px;
+    height: 100%;
     min-width: 200px;
+    background-size: contain;
     background-position: center;
 }
 
