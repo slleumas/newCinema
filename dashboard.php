@@ -4,13 +4,16 @@ require_once BASE_PATH . "templates/header.php";
 require_once BASE_PATH . "models/User.php";
 require_once BASE_PATH . 'dao/UserDAO.php';
 require_once BASE_PATH . "dao/MovieDao.php";
+require_once BASE_PATH . "dao/ReviewDao.php";
 $user = new User();
 
 //Dao do fimes
 $movieDao = new MovieDAO($conn, BASE_URL);
 $userDao = new UserDAO($conn, BASE_URL);
-$userData = $userDao->verifyToken(true);
+$reviewDao = new ReviewDAO($conn, BASE_URL);
 $userMovie = $movieDao->getMoviesByUserId($userData->id);
+$userData = $userDao->verifyToken(true);
+
 ?>
 <div id="main-container" class="container-fluid">
     <h2 class="section-title">Dashboard</h2>
@@ -28,10 +31,11 @@ $userMovie = $movieDao->getMoviesByUserId($userData->id);
             </thead>
             <tbody>
                 <?php foreach ($userMovie as $movie): ?>
+                    <?php $mediaRating = $reviewDao->getRatings($movie->id); ?>
                     <tr>
                         <td scope="row"><?= $movie->id ?></td>
                         <td><a href="<?= BASE_URL ?>movie.php?id=<?= $movie->id ?>" class="table-movie-title"><?= $movie->title ?></a></td>
-                        <td><i class="fas fa-star"></i> 9</td>
+                        <td><i class="fas fa-star"></i> <?= $mediaRating ?></td>
                         <td class="actions-column">
                             <a href="<?= BASE_URL ?>editmovie.php?id=<?= $movie->id ?>" class="btn edit-btn btn-primary">
                                 <i class="far fa-edit"></i>

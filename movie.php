@@ -3,12 +3,15 @@ require_once "globais.php";
 require_once BASE_PATH . "templates/header.php";
 require_once BASE_PATH . "models/Message.php";
 require_once BASE_PATH . "models/Movie.php";
-require_once BASE_PATH . 'dao/movieDAO.php';
+require_once BASE_PATH . 'dao/MovieDAO.php';
+require_once BASE_PATH . 'dao/ReviewDAO.php';
 
 //Pegar o id do filme
 $id = filter_input(INPUT_GET, "id");
 $movieDao = new MovieDAO($conn, BASE_URL);
+$reviewDao = new ReviewDAO($conn, BASE_URL);
 $movie;
+$userOwnsMovie = false;
 if (empty($id)) {
     $message->setMessage("O filme desejado não foi encontrado", "error", "index.php");
 } else {
@@ -23,7 +26,13 @@ if (!empty($userData)) {
         $userOwnsMovie = true;
     }
 }
-$alreadyReviewed = false;
+
+//resgatar as reviews do filme
+$movieReviews = $reviewDao->getMovieReview($id);
+//verificar se ele comentou
+$alreadyReviewed = $reviewDao->hasAlreadyReviewed($id, $userData->id);
+//checando a media do filme
+$mediaRating = $reviewDao->getRatings($id);
 //checar se o filme tem imagem
 if ($movie->image == "") {
     $movie->image = "movie_cover.jpg";
@@ -41,7 +50,7 @@ if ($movie->image == "") {
                 <span class="pipe"></span>
                 <span><?= $movie->category ?></span>
                 <span class="pipe"></span>
-                <span><i class="fas fa-star"></i> 9</span>
+                <span><i class="fas fa-star"></i> <?= $mediaRating ?></span>
             </p>
             <iframe src="<?= $movie->trailer ?>" frameborder="0" width="560" height="315"
                 allow="accelerometer; autoplay; clipboard-write; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -53,7 +62,7 @@ if ($movie->image == "") {
         <div class="offset-md-1 col-md-10" id="reviews-container">
             <h3 id="reviews-title">Avaliações:</h3>
             <!-- Verifica se habilita a review para o usuario ou não -->
-            <?php if (!empty($userData) && !$userOwnsMovie && !$alreadyReviewed): ?>
+            <?php if (!empty($userData) && !$userOwnsMovie == true && !$alreadyReviewed): ?>
                 <div class="col-md-12" id="review-form-container">
                     <h4>Envie sua avaliação</h4>
                     <p class="page-description">Preencha o formulario com a nota e comentário sobre o filme</p>
@@ -77,23 +86,13 @@ if ($movie->image == "") {
                 </div>
             <?php endif; ?>
             <!-- Comentário -->
-            <div class="col-md-12 review">
-                <div class="row">
-                    <div class="col-md-1">
-                        <div class="profile-image-container review-image" style="background-image: url(<?= BASE_URL ?>img/users/user.png);"></div>
-                    </div>
-                    <div class="col-md-9 author-details-container">
-                        <h4 class="auth-name">
-                            <a href="#">Teste da Silva</a>
-                        </h4>
-                        <p><i class="fas fa-star"></i>9</p>
-                    </div>
-                    <div class="col-md-12">
-                        <p class="comment-title">Comentários:</p>
-                        <p>Este é o comentário do usuario teste</p>
-                    </div>
-                </div>
-            </div>
+            <?php
+            foreach ($movieReviews as $review): ?>
+                <?php require BASE_PATH . "templates/user-review.php"; ?>
+            <?php endforeach; ?>
+            <?php if (empty($movieReviews)): ?>
+                <p class="empty-list">Não há comentários para este filme</p>
+            <?php endif; ?>
         </div>
     </div>
 

@@ -7,6 +7,7 @@ class Review
     public $review;
     public $user_id;
     public $movie_id;
+    public ?User $user = null;
 }
 
 interface ReviewDaoInterface

@@ -3,6 +3,8 @@
 require_once BASE_PATH . "models/Movie.php";
 require_once BASE_PATH . "models/Message.php";
 
+//raiting do filme
+require_once BASE_PATH . "dao/ReviewDAO.php";
 class MovieDAO implements MovieDAOInterface
 {
     private $conn;
@@ -26,6 +28,7 @@ class MovieDAO implements MovieDAOInterface
         $movie->category = $data['category'];
         $movie->length = $data['length'];
         $movie->user_id = $data['user_id'];
+
 
         return $movie;
     }

@@ -1,4 +1,7 @@
 <?php
+require_once BASE_PATH . 'dao/ReviewDAO.php';
+$reviewDao = new ReviewDAO($conn, BASE_URL);
+$mediaRating = $reviewDao->getRatings($movie->id);
 if (empty($movie->image)) {
     $movie->image = "movie_cover.jpg";
 }
@@ -8,7 +11,7 @@ if (empty($movie->image)) {
     <div class="card-body">
         <p class="card-rating">
             <i class="fas fa-star"></i>
-            <span class="rating">9</span>
+            <span class="rating"><?= $mediaRating ?></span>
         </p>
         <h5 class="card-title">
             <a href="<?= BASE_URL ?>movie.php?id=<?= $movie->id ?>"><?= $movie->title ?></a>

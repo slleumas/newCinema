@@ -9,6 +9,7 @@ class ReviewDAO implements ReviewDaoInterface
     private $url;
     private $message;
 
+
     public function __construct(PDO $conn, $url)
     {
         $this->conn = $conn;
@@ -47,14 +48,53 @@ class ReviewDAO implements ReviewDaoInterface
     }
     public function getMovieReview($id)
     {
-        /**/
+        $reviews = [];
+
+        $stmt = $this->conn->prepare("SELECT * FROM reviews
+         WHERE movie_id = :movie_id");
+        $stmt->bindParam(":movie_id", $id);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            $userDao = new UserDAO($this->conn, $this->url);
+            $reviewsData = $stmt->fetchAll();
+            foreach ($reviewsData as $review) {
+                $reviewObject = $this->buildReview($review);
+                //dados do usuario
+                $user = $userDao->findById($reviewObject->user_id);
+                $reviewObject->user = $user;
+                $reviews[] = $reviewObject;
+            }
+        }
+
+        return $reviews;
     }
     public function hasAlreadyReviewed($id, $user_id)
     {
-        /** */
+        $stmt = $this->conn->prepare("SELECT * FROM reviews
+         WHERE movie_id = :movie_id AND user_id = :user_id");
+        $stmt->bindParam(":movie_id", $id);
+        $stmt->bindParam(":user_id", $user_id);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            return true;
+        }
+        return false;
     }
     public function getRatings($id)
     {
-        /** */
+        $stmt = $this->conn->prepare("SELECT * FROM reviews
+         WHERE movie_id = :movie_id");
+        $stmt->bindParam(":movie_id", $id);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            $reviewsData = $stmt->fetchAll();
+            $rating = 0;
+            foreach ($reviewsData as $review) {
+                $rating += $review['rating'];
+            }
+
+            return $rating / $stmt->rowCount();
+        }
+        return "Sem avaliação";
     }
 }
