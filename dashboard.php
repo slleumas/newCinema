@@ -43,7 +43,7 @@ $userData = $userDao->verifyToken(true);
                             <form action="<?= BASE_URL  ?>process/movie_process.php" method="post">
                                 <input type="hidden" name="type" value="delete">
                                 <input type="hidden" name="id" value="<?= $movie->id ?>">
-                                <button type="submit" class="btn delete-btn btn-danger">
+                                <button type="submit" class="btn edit-btn delete-btn btn-danger">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </form>
